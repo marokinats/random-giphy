@@ -1,26 +1,54 @@
 import React from 'react';
-import logo from './logo.svg';
+import { BrowserRouter as Router, Switch, Route, NavLink } from "react-router-dom";
+import styled from 'styled-components';
+import { Container } from './components/styles';
+import MainPage from './components/mainPage/MainPage';
+import HistoryPage from './components/historyPage/HistoryPage';
+
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const Nav = styled.nav`
+  position: fixed;
+  padding: 15px 0;
+  width: 100%;
+  top: 0;
+  background-color: white;
+  box-shadow: 5px 5px 10px rgba(55,55,55,0.5);
+    ul {
+      display: flex;
+      align-items: center;
+    }
+    li {
+      margin-right: 20px;
+    }
+`
 
-export default App;
+export default () => {
+
+  return (
+    <>
+      <Router>
+        <Nav>
+          <Container>
+            <ul>
+              <li>
+                <NavLink exact to="/" activeClassName="active-link">Главная</NavLink>
+              </li>
+              <li>
+                <NavLink to="/history" activeClassName="active-link">История</NavLink>
+              </li>
+            </ul>
+          </Container>
+        </Nav>
+        <Switch>
+          <Route path="/history">
+            <HistoryPage />
+          </Route>
+          <Route path="/">
+            <MainPage />
+          </Route>
+        </Switch>
+      </Router>
+    </>
+  )
+}
